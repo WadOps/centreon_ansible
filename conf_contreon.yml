@@ -28,8 +28,8 @@
          - name: ProjectA
            alias: Project AAAAAA ressources
          - name: MyHostgroup
-      delegate_to: localhost
-      run_once: true
+     delegate_to: localhost
+     run_once: true
 
    - name: Add host to Centreon
      centreon_host:
