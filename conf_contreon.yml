@@ -1,69 +1,69 @@
- name: create host
- hosts: all
- roles:
-   - role: ansible-modules-centreon
+- name: create host
+  hosts: all
+  roles:
+    - role: ansible-modules-centreon
 
- vars:
-   centreon_url: "http://192.168.1.12/centreon"
-   centreon_api_user: "admin"
-   centreon_api_pass: "centreon"
+  vars:
+    centreon_url: "http://192.168.1.12/centreon"
+    centreon_api_user: "admin"
+    centreon_api_pass: "centreon"
 
- handlers:
-   - name: "centreon api applycfg"
-     centreon_poller:
-       url: "{{ centreon_url }}"
-       username: "{{ centreon_api_user }}"
-       password: "{{ centreon_api_pass }}"
-     listen: "centreon api applycfg"
+  handlers:
+    - name: "centreon api applycfg"
+      centreon_poller:
+        url: "{{ centreon_url }}"
+        username: "{{ centreon_api_user }}"
+        password: "{{ centreon_api_pass }}"
+      listen: "centreon api applycfg"
 
- tasks:
-   - name: Add Hostgroup
-     centreon_hostgroup:
-       url: "{{ centreon_url }}"
-       username: "{{ centreon_api_user }}"
-       password: "{{ centreon_api_pass }}"
-       hg:
-         - name: Linux-Server
-           alias: Linux Server
-         - name: ProjectA
-           alias: Project AAAAAA ressources
-         - name: MyHostgroup
-     delegate_to: localhost
-     run_once: true
+  tasks:
+    - name: Add Hostgroup
+      centreon_hostgroup:
+        url: "{{ centreon_url }}"
+        username: "{{ centreon_api_user }}"
+        password: "{{ centreon_api_pass }}"
+        hg:
+          - name: Linux-Server
+            alias: Linux Server
+          - name: ProjectA
+            alias: Project AAAAAA ressources
+          - name: MyHostgroup
+      delegate_to: localhost
+      run_once: true
 
-   - name: Add host to Centreon
-     centreon_host:
-       url: "{{ centreon_url }}"
-       username: "{{ centreon_api_user }}"
-       password: "{{ centreon_api_pass }}"
-       name: "{{ ansible_hostname }}"
-       alias: "{{ ansible_fqdn }}"
-       ipaddr: "{{ ansible_default_ipv4.address }}"
-       hosttemplates:
-         - name: OS-Linux-SNMP-custom
-         - name: OS-Linux-SNMP-disk
-         - name: OS-Linux-SNMP-dummy
-           state: absent
-       hostgroups:
-         - name: Linux-Servers
-         - name: Debian-Servers
-           state: absent
-         - name: ProjectA
-       instance: Central
-       status: enabled
-       state: present
-       params:
-         - name: notes_url
-           value: "https://wiki.company.org/servers/{{ ansible_fqdn }}"
-         - name: notes
-           value: "My Best server"
-       macros:
-         - name: MACRO1
-           value: value1
-           ispassword: 0
-         - name: "$_HOSTMACRO2$"
-           value: value2
-           desc: macro description
-           state: absent
-       applycfg: False
-     notify: "centreon api applycfg"
+    - name: Add host to Centreon
+      centreon_host:
+        url: "{{ centreon_url }}"
+        username: "{{ centreon_api_user }}"
+        password: "{{ centreon_api_pass }}"
+        name: "{{ ansible_hostname }}"
+        alias: "{{ ansible_fqdn }}"
+        ipaddr: "{{ ansible_default_ipv4.address }}"
+        hosttemplates:
+          - name: OS-Linux-SNMP-custom
+          - name: OS-Linux-SNMP-disk
+          - name: OS-Linux-SNMP-dummy
+            state: absent
+        hostgroups:
+          - name: Linux-Servers
+          - name: Debian-Servers
+            state: absent
+          - name: ProjectA
+        instance: Central
+        status: enabled
+        state: present
+        params:
+          - name: notes_url
+            value: "https://wiki.company.org/servers/{{ ansible_fqdn }}"
+          - name: notes
+            value: "My Best server"
+        macros:
+          - name: MACRO1
+            value: value1
+            ispassword: 0
+          - name: "$_HOSTMACRO2$"
+            value: value2
+            desc: macro description
+            state: absent
+        applycfg: False
+      notify: "centreon api applycfg"
