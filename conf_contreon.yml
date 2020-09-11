@@ -1,5 +1,6 @@
 - name: create host
   hosts: all
+  connection: local
   roles:
     - role: ansible-modules-centreon
 
