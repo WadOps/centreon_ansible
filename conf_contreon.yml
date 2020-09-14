@@ -42,22 +42,19 @@
         ipaddr: "{{ ansible_default_ipv4.address }}"
         hosttemplates:
           - name: OS-Linux-SNMP-custom
-          - name: OS-Linux-SNMP-disk
-          - name: OS-Linux-SNMP-dummy
-            state: absent
         hostgroups:
-          - name: Linux-Servers
+          - name: Linux-Server
           - name: Debian-Servers
             state: absent
           - name: ProjectA
         instance: Central
         status: enabled
         state: present
-        params:
-          - name: notes_url
-            value: "https://wiki.company.org/servers/{{ ansible_fqdn }}"
-          - name: notes
-            value: "My Best server"
+#        params:
+#          - name: notes_url
+#            value: "https://wiki.company.org/servers/{{ ansible_fqdn }}"
+#          - name: notes
+#            value: "My Best server"
         macros:
           - name: MACRO1
             value: value1

@@ -1,0 +1,1 @@
+- src: https://github.com/guillaumewatteeux/ansible-centreon.git  scm: git  version: dev  name: ansible-modules-centreon
